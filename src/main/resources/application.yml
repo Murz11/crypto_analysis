@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: crypto-tracker
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cryptodb
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          batch_size: 20
+    show-sql: false
+  webflux:
+    client:
+      max-memory-size: 10MB
+logging:
+  level:
+    root: WARN            # по умолчанию показываем только WARN и ERROR
+    org.springframework: WARN
+    org.hibernate: WARN
+    org.apache: WARN
+    org.example.crypto: INFO   # твой пакет — INFO
+
+crypto:
+  coingecko:
+    base-url: https://api.coingecko.com/api/v3
+    request-timeout: 10000
+    coins-to-track:
+      - bitcoin
+      - ethereum
+      - binancecoin
+      - ripple
+      - cardano
