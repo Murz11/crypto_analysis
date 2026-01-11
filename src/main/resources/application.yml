@@ -21,11 +21,11 @@ spring:
       max-memory-size: 10MB
 logging:
   level:
-    root: WARN            # по умолчанию показываем только WARN и ERROR
+    root: WARN
     org.springframework: WARN
     org.hibernate: WARN
     org.apache: WARN
-    org.example.crypto: INFO   # твой пакет — INFO
+    org.example.crypto: INFO
 management:
   endpoints:
     web:

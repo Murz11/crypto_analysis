@@ -51,12 +51,18 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build with Maven (CI profile)
-        run: mvn clean package -DskipTests -Pci
+        run: mvn clean package -Pci -DskipTests
 
-      - name: Run tests
+      - name: Run unit tests (JUnit)
         run: mvn test -Pci
 
-      - name: Archive artifact
+      - name: Archive test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-results
+          path: target/surefire-reports/*.xml
+
+      - name: Archive built JAR
         uses: actions/upload-artifact@v4
         with:
           name: crypto-app

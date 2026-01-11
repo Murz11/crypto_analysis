@@ -48,7 +48,7 @@ public class CoinGeckoService {
     private final Path coinsFile = Paths.get("coins_to_track.json");
 
     @Getter
-    private List<String> coinsToTrack;
+    List<String> coinsToTrack;
 
     @Autowired
     public CoinGeckoService(CoinPriceHistoryRepository priceHistoryRepository) {
@@ -236,7 +236,7 @@ public class CoinGeckoService {
         return historicalData;
     }
 
-    private String getCoinSymbol(String coinId) {
+    String getCoinSymbol(String coinId) {
         try {
             Mono<JsonNode> response = webClient.get()
                     .uri(uriBuilder -> uriBuilder
