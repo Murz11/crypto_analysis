@@ -5,6 +5,7 @@ import org.example.crypto.service.CoinGeckoService;
 import org.example.crypto.service.PriceHistoryService;
 import org.example.crypto.spark.SparkRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine.Command;
 
@@ -13,6 +14,7 @@ import java.util.Scanner;
 import java.util.concurrent.Callable;
 
 @Component
+@Profile("local")
 @Command(name = "crypto-cli", mixinStandardHelpOptions = true)
 public class CryptoCLI implements Callable<Integer> {
 

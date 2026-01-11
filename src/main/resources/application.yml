@@ -26,7 +26,14 @@ logging:
     org.hibernate: WARN
     org.apache: WARN
     org.example.crypto: INFO   # твой пакет — INFO
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
 crypto:
   coingecko:
     base-url: https://api.coingecko.com/api/v3
