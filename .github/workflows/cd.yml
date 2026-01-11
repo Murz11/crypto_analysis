@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DOCKER_IMAGE: your-dockerhub-username/crypto-app
+      DOCKER_IMAGE: murz11/cryptoanalysis2-app
       DOCKER_TAG: latest
 
     steps:
