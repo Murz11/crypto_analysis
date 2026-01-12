@@ -56,37 +56,6 @@ CI/CD: GitHub Actions, Docker
 
 API: CoinGecko API
 
-🛠 Установка и запуск
-
-Клонируйте репозиторий
-
-git clone https://github.com/Murz11/crypto_analysis.git
-cd crypto_analysis
-
-
-Настройте PostgreSQL
-Создайте базу cryptodb и пользователя с правами доступа. Укажите параметры подключения в application.properties или через переменные среды.
-
-Соберите Docker-образ приложения
-
-docker build -t your-dockerhub-username/crypto-app:latest .
-
-
-Запустите контейнер
-
-docker run -d --name crypto-app -p 8080:8080 your-dockerhub-username/crypto-app:latest
-
-
-Запуск Spark Batch Processor
-
-./gradlew run
-
-
-Подключение Grafana
-
-Добавьте источник данных PostgreSQL с базой cryptodb.
-
-Импортируйте готовый дашборд (файлы JSON в grafana-dashboards/).
 
 📊 Панели Grafana
 
