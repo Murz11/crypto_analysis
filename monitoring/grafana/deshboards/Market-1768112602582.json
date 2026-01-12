@@ -1,0 +1,921 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "description": "",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<div style=\"font-size: 26px; font-weight: bold;\">\r\n    Метрики для монеты '$symbol'\r\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "12.2.2",
+      "title": "",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "uid": "ff5dfvh9mvjswd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 0,
+        "y": 2
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.2.2",
+      "targets": [
+        {
+          "dataset": "cryptodb",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    symbol as \"Монета\",\r\n    avg_price as \"Средняя цена\",\r\n    min_price as \"Минимум\",\r\n    max_price as \"Максимум\"\r\nFROM spark_avg_price_history \r\nWHERE symbol = '$symbol'\r\nORDER BY avg_price DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Историческая информация по '$symbol'",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "ff5dfvh9mvjswd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 11,
+        "y": 2
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.2.2",
+      "targets": [
+        {
+          "dataset": "cryptodb",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    symbol as \"Монета\",\r\n    price as \"Текущая цена\",\r\n    last_collected as \"Время обновления\"\r\nFROM spark_last_price_history \r\nWHERE symbol = '$symbol'\r\nORDER BY price DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Текущая цена '$symbol'",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "ff5dfvh9mvjswd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 9,
+        "x": 15,
+        "y": 2
+      },
+      "id": 11,
+      "options": {
+        "displayLabels": [
+          "name",
+          "value"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "p30"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "sort": "desc",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.2",
+      "targets": [
+        {
+          "dataset": "cryptodb",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n    symbol,                       -- подпись секции на графике\r\n    market_dominance_pct AS value  -- доля рынка в процентах\r\nFROM spark_market_dominance_history\r\nWHERE analysis_timestamp = (\r\n    SELECT MAX(analysis_timestamp) FROM spark_market_dominance_history\r\n)\r\nORDER BY market_dominance_pct DESC;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Доля капитализации рынка",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "ff5dfvh9mvjswd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 2,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "stepBefore",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 8,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": true,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 11,
+        "x": 0,
+        "y": 9
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.2",
+      "targets": [
+        {
+          "dataset": "cryptodb",
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n    date AS time,\r\n    end_price AS \"Daily Price\"\r\nFROM spark_daily_change_history\r\nWHERE symbol = '$symbol'\r\nORDER BY date ASC;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Динамика цены '$symbol'",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "ff5dfvh9mvjswd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 4,
+            "pointSize": 13,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "showValues": true,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 11,
+        "y": 9
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.2",
+      "targets": [
+        {
+          "dataset": "cryptodb",
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n    week AS time,\r\n    symbol AS metric,\r\n    volatility_pct\r\nFROM spark_weekly_volatility_history\r\nWHERE symbol = '$symbol'\r\nORDER BY week\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Волатильность(по неделям) для '$symbol'",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "uid": "ff5dfvh9mvjswd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 82,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [
+            {
+              "options": {
+                "'Изменение %' < 0 ": {
+                  "color": "dark-red",
+                  "index": 0
+                },
+                "123>3": {
+                  "color": "yellow",
+                  "index": 1
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Изменение %"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "from": -100,
+                      "result": {
+                        "color": "red",
+                        "index": 0
+                      },
+                      "to": 0
+                    },
+                    "type": "range"
+                  },
+                  {
+                    "options": {
+                      "from": 0,
+                      "result": {
+                        "color": "yellow",
+                        "index": 1
+                      },
+                      "to": 0
+                    },
+                    "type": "range"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 3,
+      "options": {
+        "barRadius": 0.3,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.2.2",
+      "targets": [
+        {
+          "dataset": "cryptodb",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "WITH latest AS (\r\n    SELECT *,\r\n           ROW_NUMBER() OVER (PARTITION BY coin_id, date ORDER BY analysis_timestamp DESC) AS rn\r\n    FROM spark_daily_change_history\r\n    WHERE date = '$date'\r\n      AND price_change_pct IS NOT NULL\r\n)\r\nSELECT \r\n    symbol AS \"Монета\",\r\n    price_change_pct AS \"Изменение %\",\r\n    CASE \r\n        WHEN price_change_pct > 0 THEN 'Рост'\r\n        WHEN price_change_pct < 0 THEN 'Падение' \r\n        ELSE 'Без изменений'\r\n    END AS \"Тренд\"\r\nFROM latest\r\nWHERE rn = 1\r\nORDER BY price_change_pct DESC;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "ИЗМЕНЕНИЕ ЦЕНЫ '$date'",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "ff5dfvh9mvjswd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rank_position"
+            },
+            "properties": [
+              {
+                "id": "unit"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 11,
+        "x": 0,
+        "y": 24
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "12.2.2",
+      "targets": [
+        {
+          "dataset": "cryptodb",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "WITH weekly_top AS (\r\n    SELECT\r\n        week_start,\r\n        coin_id,\r\n        symbol,\r\n        weekly_market_cap,\r\n        rank_position\r\n    FROM spark_marketcap_weekly_ranking\r\n    WHERE rank_position <= 10\r\n      AND to_char(week_start, 'YYYY-MM-DD') = '$week_market_cap'\r\n),\r\nprevious_week AS (\r\n    SELECT\r\n        week_start + INTERVAL '7 DAY' AS week_start,\r\n        coin_id,\r\n        rank_position AS prev_rank\r\n    FROM spark_marketcap_weekly_ranking\r\n    WHERE rank_position <= 10\r\n)\r\nSELECT\r\n    to_char(w.week_start, 'YYYY-MM-DD') AS week_start_text,\r\n    w.symbol,\r\n    w.weekly_market_cap,\r\n    w.rank_position,\r\n    CASE\r\n        WHEN p.prev_rank IS NULL THEN 'new'\r\n        WHEN w.rank_position < p.prev_rank THEN CONCAT('↑', p.prev_rank - w.rank_position)\r\n        WHEN w.rank_position > p.prev_rank THEN CONCAT('↓', w.rank_position - p.prev_rank)\r\n        ELSE '–'\r\n    END AS rank_change\r\nFROM weekly_top w\r\nLEFT JOIN previous_week p\r\n    ON w.coin_id = p.coin_id\r\n    AND w.week_start = p.week_start\r\nORDER BY w.rank_position ASC;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Динамеческий рейтинг по капитализации",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "ff5dfvh9mvjswd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rank_position"
+            },
+            "properties": [
+              {
+                "id": "unit"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 11,
+        "y": 24
+      },
+      "id": 10,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true
+      },
+      "pluginVersion": "12.2.2",
+      "targets": [
+        {
+          "dataset": "cryptodb",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "WITH weekly_top AS (\r\n    SELECT\r\n        week_start,\r\n        coin_id,\r\n        symbol,\r\n        weekly_volume,\r\n        rank_position\r\n    FROM spark_volume_weekly_ranking\r\n    WHERE rank_position <= 10\r\n      AND to_char(week_start, 'YYYY-MM-DD') = '$week_market_cap'\r\n),\r\nprevious_week AS (\r\n    SELECT\r\n        week_start + INTERVAL '7 DAY' AS week_start,\r\n        coin_id,\r\n        rank_position AS prev_rank\r\n    FROM spark_volume_weekly_ranking\r\n    WHERE rank_position <= 10\r\n)\r\nSELECT\r\n    to_char(w.week_start, 'YYYY-MM-DD') AS week_start_text,\r\n    w.symbol,\r\n    w.weekly_volume,\r\n    w.rank_position,\r\n    CASE\r\n        WHEN p.prev_rank IS NULL THEN 'new'\r\n        WHEN w.rank_position < p.prev_rank THEN CONCAT('↑', p.prev_rank - w.rank_position)\r\n        WHEN w.rank_position > p.prev_rank THEN CONCAT('↓', w.rank_position - p.prev_rank)\r\n        ELSE '–'\r\n    END AS rank_change\r\nFROM weekly_top w\r\nLEFT JOIN previous_week p\r\n    ON w.coin_id = p.coin_id\r\n    AND w.week_start = p.week_start\r\nORDER BY w.rank_position ASC;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Динамический рейтинг по объёму торгов",
+      "type": "table"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "xmr",
+          "value": "xmr"
+        },
+        "definition": "SELECT DISTINCT symbol FROM spark_last_price_history ORDER BY symbol",
+        "name": "symbol",
+        "options": [],
+        "query": "SELECT DISTINCT symbol FROM spark_last_price_history ORDER BY symbol",
+        "refresh": 2,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "1764201600000",
+          "value": "1764201600000"
+        },
+        "definition": "SELECT \n    to_char(date, 'YYYY-MM-DD') as \"date_text\",\n    extract(epoch from date) * 1000 as \"date_value\"\nFROM (\n    SELECT DISTINCT date \n    FROM spark_daily_change_history \n    ORDER BY date DESC\n) dates;",
+        "name": "date",
+        "options": [],
+        "query": "SELECT \n    to_char(date, 'YYYY-MM-DD') as \"date_text\",\n    extract(epoch from date) * 1000 as \"date_value\"\nFROM (\n    SELECT DISTINCT date \n    FROM spark_daily_change_history \n    ORDER BY date DESC\n) dates;",
+        "refresh": 2,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "2025-11-10",
+          "value": "2025-11-10"
+        },
+        "definition": "SELECT DISTINCT\n    to_char(week_start, 'YYYY-MM-DD') AS week_start_text\nFROM spark_marketcap_weekly_ranking\nORDER BY week_start_text DESC;\n",
+        "description": "",
+        "name": "week_market_cap",
+        "options": [],
+        "query": "SELECT DISTINCT\n    to_char(week_start, 'YYYY-MM-DD') AS week_start_text\nFROM spark_marketcap_weekly_ranking\nORDER BY week_start_text DESC;\n",
+        "refresh": 2,
+        "regex": "",
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Market",
+  "uid": "advsvwx",
+  "version": 17
+}
